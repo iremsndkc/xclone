@@ -10,3 +10,4 @@ Currently, two official plugins are available:
 # x-clone
 # x-clone
 # x-clone
+# xclone
