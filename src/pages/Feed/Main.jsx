@@ -8,24 +8,16 @@ import Post from "../../components/Post";
 const Main = ({user}) => {
   const [tweets, setTweets] = useState();
   useEffect(() => {
-    //verileri alınacak koleksiyonunun referansını al.
-   const ref = collection(db, "tweets");
-
-   // sorgu ayalrını yap.
-   const q = query(ref, orderBy("createdAt", "desc"));
-
-   //koleksiyona abone ol.
-    const unsub = onSnapshot(q, (snapShot) => {
-    //tweetlerin geçici olarak tutulacağı diiz.
-    const temp = [];
-    // dökümanların içerisindeki veriye erişip geçici diziye aktarıyoruz.
-    snapShot.docs.forEach((doc) => temp.push(doc.data()));
-    // state'i güncelle.
-    setTweets(temp);
-   });
-   //bileşen ekrandan ayrıldığında aboneliği durdur.
-   return() => unsub();
-  }, []);
+    const tweetCollection = collection(db, 'tweets')
+    const options = query(tweetCollection,orderBy('createdAt','desc'))
+    const unsub = onSnapshot(options, (snapshot) => {
+      const tempTweets = []
+      snapshot.forEach((doc) => tempTweets.push({ id: doc.id, ...doc.data() }))
+      setTweets(tempTweets)
+      return() => unsub()
+    })
+  }, [])
+  
   return (
     <div className='border border-zinc-600 overflow-y-auto'>
       <header className="border-b border-zinc-600 p-4 font-bold">Anasayfa</header>

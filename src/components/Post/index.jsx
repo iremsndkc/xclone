@@ -9,14 +9,17 @@ const Post = ({tweet}) => {
       <img 
       className="w-12 h-12 rounded-full"
       src={tweet.user.photo} 
-      alt={tweet.user.name} />
+      alt={tweet.user.name}
+      />
+
       <div className="w-full">
         <div className="flex justify-between ">
             <UserInfo tweet={tweet}/>
-            <DropDown/>
+            <DropDown tweet={tweet}/>
         </div>
-        <Content/>
-        <Button/>
+
+        <Content tweet={tweet}/>
+        <Button tweet={tweet}/>
       </div>
     </div>
   )
